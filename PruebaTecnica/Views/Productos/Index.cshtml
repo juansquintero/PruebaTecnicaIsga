@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PruebaTecnica.Models.ProductosModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<CiudadModel> ciudad = ViewBag.ciudades;
+}
+
+<h1>Listado de productos</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Crear</a>
+</p>
+<table class="table tabletable-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ciudad)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidad)
+            </td>
+            <td>
+                @ciudad.Where(x => x.id == item.ciudad).FirstOrDefault().descripcion
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.id">Editar</a> |
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.id">Detalles</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.id">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
